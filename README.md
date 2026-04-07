@@ -1,21 +1,21 @@
 ## Мультилейбл-классификация тегов статей Arxiv по title и abstract
 
-## 2. Данные
+## 1. Данные
 Данные представляют из себя ```(title, abstract, tags)```, причём сэмплируем из каждой категории тегов (всего их 8) не более 200k статей. [link](https://www.kaggle.com/datasets/Cornell-University/arxiv).
 
-## 3. Модели
+## 2. Модели
 
-### 3.1. Embedder
+### 2.1. Embedder
 *   **Модель:** `malteos/scincl` (SciNCL) — специализированная Sentence Transformer, дообученная на научных текстах.
 *   **Процесс:** Сразу векторизовал все тексты, саму модель не дообучал.
 
-### 3.2. Архитектура Классификатора
-Далее embeddings из предыдущей модели подавались в Multilabel Classification Head:
+### 2.2. Архитектура Классификатора
+Далеe embeddings из предыдущей модели подавались в Multilabel Classification Head:
 *   **Вход:** Вектор размерности 768.
 *   **Архитектура:** 3-x слойный MLP c GELU
 *   **Функция потерь:** `BCEWithLogitsLoss`.
 
-### 3.3. Обучение
+### 2.3. Обучение
 *   **Фреймворк:** Lightning.
 *   **Оптимизатор:** AdamW с lr = 1e-3.
 *   **Batch Size:** 1024.
@@ -26,7 +26,7 @@
     *   `MultilabelAUROC` (average='macro')
     *   `MultilabelAccuracy` (average='macro')
 
-## 4. Результаты экспериментов
+## 3. Результаты экспериментов
 
 Метрики валидации:
 
